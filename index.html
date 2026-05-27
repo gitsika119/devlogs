@@ -18,7 +18,7 @@
   <div class="menu-container">
     <main class="log-index">
       
-      <a href="logs/hardware-thoughts.html" class="persona-card active" style="--i: 0;">
+      <a href="logs/hardware-thoughts.html" class="persona-card" style="--i: 0;">
         <div class="card-content">
           <span class="log-number">LOG_03</span>
           <div class="text-group">
@@ -62,11 +62,10 @@
     function updateSelection(index) {
       cards.forEach(card => card.classList.remove('active'));
       cards[index].classList.add('active');
-      cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       currentIndex = index;
     }
 
-    // Keyboard Arrow Listeners
+    // Keyboard Arrow Listeners (Desktop)
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -81,10 +80,35 @@
       }
     });
 
-    // Mouse Hover Syncs with Active State
-    cards.forEach((card, index) => {
-      card.addEventListener('mouseenter', () => updateSelection(index));
-    });
+    // Desktop Mouse Sync
+    if (window.innerWidth > 768) {
+      cards.forEach((card, index) => {
+        card.addEventListener('mouseenter', () => updateSelection(index));
+      });
+      // Initialize desktop with top selected
+      updateSelection(0);
+    }
+
+    // Mobile Scroll-Spy Engine (Auto-selects top element during scroll)
+    if (window.innerWidth <= 768) {
+      const observerOptions = {
+        root: null,
+        // Targets elements crossing the upper-middle hot-zone of the mobile display
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const index = Array.from(cards).indexOf(entry.target);
+            updateSelection(index);
+          }
+        });
+      }, observerOptions);
+
+      cards.forEach(card => observer.observe(card));
+    }
   </script>
 </body>
 </html>
