@@ -1,4 +1,4 @@
-/* === General Reset === */
+/* === Core Setup & Canvas Layout === */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,196 +6,253 @@
 }
 
 body {
-  background-color: #0d0f12; 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #05070a; /* Deep premium ink black */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #e2e8f0;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Changed from center to prevent vertical cutoff */
-  padding: 40px 20px;
+  flex-direction: row; /* Horizontal row parsing for desktop side-header grid */
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 40px 40px 160px; /* Generous left boundary buffer for vertical title placement */
   width: 100%;
+  overflow-x: hidden;
 }
 
-/* Subtle, clean geometric accent line (Not overwhelming) */
+/* Subtle, localized radial background accent light */
 .diagonal-stripe {
   position: fixed;
   top: 0;
   left: 0;
-  width: 6px;
+  width: 100vw;
   height: 100vh;
-  background: linear-gradient(to bottom, #06b6d4, #3b82f6); /* Premium Cyber Aqua gradient */
+  background: radial-gradient(circle at 10% 30%, rgba(0, 240, 255, 0.03) 0%, rgba(0, 0, 0, 0) 60%);
   z-index: 1;
+  pointer-events: none;
 }
 
+/* === Upgraded Left Heading Color & Glow === */
+.vertical-header {
+  position: fixed;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.vertical-header h1 {
+  font-family: 'Arial Black', -apple-system, sans-serif;
+  font-weight: 900;
+  font-size: 4.8rem;
+  letter-spacing: -2px;
+  writing-mode: vertical-lr;
+  text-transform: uppercase;
+  transform: rotate(180deg);
+  
+  /* Replaced the cringey gradient with a solid, premium neon cyan fill */
+  color: #00f0ff; 
+  
+  filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.15));
+  opacity: 0.85;
+}
+
+/* === Workspace Content Container === */
 .menu-container {
   position: relative;
   width: 100%;
-  max-width: 750px;
+  max-width: 900px;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Header Section - Clean & Modern */
-.persona-header {
-  margin-bottom: 40px;
-  border-bottom: 1px solid #1e293b;
-  padding-bottom: 20px;
-}
-
-.persona-header h1 {
-  font-family: 'Arial Black', -apple-system, sans-serif;
-  font-size: 2.2rem;
-  color: #ffffff;
-  letter-spacing: -1px;
-  text-transform: uppercase;
-}
-
-.persona-header .subtitle {
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.8rem;
-  color: #06b6d4; /* Clean Neon Aqua */
-  margin-top: 6px;
-  letter-spacing: 1px;
-}
-
-/* Log Index List */
+/* === THE P3R RE-ACCELERATED KINETIC CURVED INDEX === */
 .log-index {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 40px;
+  gap: 12px; /* Balanced row gaps to cleanly isolate custom rotations */
+  margin-bottom: 30px;
+  width: 100%;
+  align-items: flex-start;
 }
 
-/* Interactive Slanted Cards - Cleaned up UX */
+/* Cascading Element Core Anchor */
 .persona-card {
   text-decoration: none;
   display: block;
-  background-color: #151922; /* Darker card base */
-  border: 1px solid #1e293b;
-  border-left: 4px solid #06b6d4; /* Aqua anchor edge */
-  padding: 20px 24px;
-  transform: skewX(-6deg); /* Subtler, more elegant slant */
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); /* Ultra-smooth animation */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: transparent;
+  padding: 10px 16px;
+  width: 100%;
+  outline: none;
+  
+  /* Opposing Side Curve: Progressively steps entries inward using a positive rotation profile */
+  margin-left: calc(var(--i) * -35px + 100px); /* Reindexed to step backward safely */
+  transform: rotate(calc(var(--i) * 1.8deg)); /* Flipped from negative to positive angle */
+  
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease,
+              margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Perfectly counter-skews text so it stays completely readable */
+/* === UNIVERSAL ACTIVE/HOVER POP STATE === */
+.persona-card:hover,
+.persona-card.active {
+  /* Pulls the active row slightly forward relative to its flipped position */
+  margin-left: calc(var(--i) * -35px + 115px);
+}
+
+/* Responsive row-wrap architecture mapping layout elements side-by-side */
 .card-content {
-  transform: skewX(6deg);
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 24px;
 }
 
 .log-number {
-  font-family: monospace;
-  font-size: 0.75rem;
-  color: #06b6d4;
+  font-family: SFMono-Regular, Consolas, monospace;
+  font-size: 0.8rem;
+  color: #334155;
   font-weight: bold;
-  letter-spacing: 1px;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+/* Sub-flex split profile matching header links left and tags right */
+.text-group {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between; /* Pushes meta descriptions across to the right margins */
+  width: 100%;
+  gap: 30px;
 }
 
 .persona-card h2 {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: #ffffff;
-  line-height: 1.4;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #475569; /* Balanced matte silver backdrop shade */
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  white-space: nowrap; /* Preserves hyper-sharp linear alignment on laptop viewports */
+  transform-origin: left center;
+  transition: color 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .log-meta {
   font-size: 0.85rem;
-  color: #64748b; /* Muted slate gray */
+  color: #1e293b;
   font-family: SFMono-Regular, monospace;
+  white-space: nowrap;
+  transition: color 0.15s ease;
 }
 
-/* ELEVATED TECH HOVER STATE */
-.persona-card:hover {
-  background-color: #1e2533;
-  border-color: #06b6d4;
-  transform: skewX(-6deg) translateX(8px); /* Subtle, premium slide */
-  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.15);
+/* === UNIVERSAL ACTIVE/HOVER SELECTION HOOKS === */
+.persona-card:hover,
+.persona-card.active {
+  /* Shifts the specific target slightly further forward on selection to emphasize depth */
+  margin-left: calc(var(--i) * 45px + 15px);
 }
 
-.persona-card:hover h2 {
-  color: #06b6d4; /* Text turns crisp aqua on hover */
+.persona-card:hover h2,
+.persona-card.active h2 {
+  color: #00f0ff; /* Sharp snap deployment to cyber cyan ink */
+  font-style: italic; /* Signature diagonal velocity accent override */
+  
+  /* Matrix slant configuration profile */
+  transform: scale(1.03) skewX(-12deg);
+  text-shadow: 3px 3px 0px rgba(0, 240, 255, 0.2);
 }
 
-/* Return Button Footer */
+.persona-card:hover .log-number,
+.persona-card.active .log-number {
+  color: #ffffff;
+}
+
+.persona-card:hover .log-meta,
+.persona-card.active .log-meta {
+  color: #00f0ff;
+  opacity: 0.8;
+}
+
+/* Minimalist Navigation Footer Link */
 .index-footer {
+  padding-left: 16px;
   margin-top: 20px;
 }
 
 .back-btn {
   text-decoration: none;
   font-family: SFMono-Regular, monospace;
-  font-size: 0.85rem;
-  font-weight: bold;
-  color: #94a3b8;
-  background-color: #151922;
-  border: 1px solid #1e293b;
-  padding: 10px 20px;
-  display: inline-block;
-  transform: skewX(-6deg);
-  transition: all 0.2s ease;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+  transition: color 0.2s ease;
 }
 
 .back-btn:hover {
-  background-color: #06b6d4;
-  color: #0d0f12;
-  border-color: #06b6d4;
+  color: #ffffff;
 }
 
+/* === PHONE AUTO-FLATTENING COMPRESSION (CRUCIAL SAFEGUARD) === */
 @media (max-width: 768px) {
   body {
-    padding: 24px 16px; /* Tighten layout padding for mobile viewports */
+    flex-direction: column; /* Re-orients viewport workflow vertically */
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 130px 20px 40px 20px; /* Generous top padding shifts elements below mobile heading position */
   }
 
-  .menu-container {
-    width: 100%;
-    max-width: 100%; /* Force container to respect hardware width boundaries */
-    overflow: hidden; /* Prevent text elements from spilling past margins */
+  /* Repositions vertical left title to horizontal top title on narrow viewports */
+  .vertical-header {
+    position: absolute;
+    top: 45px;
+    left: 20px;
+    transform: none;
   }
 
-  .persona-header {
-    margin-bottom: 24px;
-    padding-bottom: 16px;
+  .vertical-header h1 {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 2.8rem;
+    background: linear-gradient(90deg, #ffffff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
   }
 
-  .persona-header h1 {
-    font-size: 1.6rem; /* Scaled down slightly more to fit on small phone displays */
-    word-break: break-word; /* Ensure titles don't stretch layout bounds */
-  }
-
-  /* Completely flattens the skew on phones so text doesn't clip or look broken */
+  /* Completely flattens custom math offsets and rotations on touch displays so it doesn't clip boundaries */
   .persona-card {
-    transform: none !important; 
-    padding: 16px;
-    border-radius: 6px; 
-    width: 100%; /* Force width alignment to layout containers */
+    margin-left: 0 !important;
+    transform: none !important;
+    padding: 16px 0;
   }
 
-  .card-content {
-    transform: none !important;
-    width: 100%;
+  /* Resets layout to full stack block configuration, dropping metadata directly beneath headers */
+  .card-content, .text-group {
+    flex-direction: column;
+    gap: 4px;
   }
 
   .persona-card h2 {
-    font-size: 1.1rem;
-    white-space: normal; /* Force text wrapping profiles */
-    overflow-wrap: break-word; /* Safe string breaking layout rules */
-    word-break: normal;
+    font-size: 1.25rem;
+    white-space: normal; /* Authorizes safe multi-line sentence wrapping inside narrow panels */
+    overflow-wrap: break-word;
+    color: #94a3b8; /* Uplifts unselected text values slightly to maintain high accessibility contrast */
   }
 
-  /* Safe interactive hover profiles for mobile viewports */
-  .persona-card:hover {
-    transform: translateX(4px) !important; 
+  .log-meta {
+    font-size: 0.75rem;
+    white-space: normal;
   }
 
-  .back-btn {
-    transform: none !important;
-    border-radius: 4px;
-    width: 100%; 
-    text-align: center;
+  /* Moderated kinetic metrics tuned specifically for tactile touch triggers */
+  .persona-card:hover h2,
+  .persona-card.active h2 {
+    transform: scale(1.02) skewX(-8deg) translateX(6px);
   }
 }

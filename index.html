@@ -3,56 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Technical devlogs and engineering build notes by Gitika Saini. Deep dives into systems programming, cybersecurity, and full-stack development.">
+  <meta name="description" content="Technical devlogs by Gitika Saini.">
   <title>Gitika Saini | Devlogs</title>
   <link rel="stylesheet" href="styles.css">
-  
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Gitika Saini Devlogs",
-    "url": "https://gitsika119.github.io/devlogs/",
-    "author": {
-      "@type": "Person",
-      "name": "Gitika Saini"
-    }
-  }
-  </script>
 </head>
 <body>
 
   <div class="diagonal-stripe"></div>
 
-  <div class="menu-container">
-    <header class="persona-header">
-      <h1>// SYSTEM_LOG //</h1>
-      <p class="subtitle">BUILD_LOGS_AND_BREAKTHROUGHS.SYS</p>
-    </header>
+  <aside class="vertical-header">
+    <h1>DEVLOGS</h1>
+  </aside>
 
+  <div class="menu-container">
     <main class="log-index">
       
-      <a href="logs/ee.html" class="persona-card">
+      <a href="logs/hardware-thoughts.html" class="persona-card active" style="--i: 0;">
         <div class="card-content">
           <span class="log-number">LOG_03</span>
-          <h2>Hardware Projects + Thoughts</h2>
-          <p class="log-meta">★ Electrical Engineering ★ 2025-26 </p>
+          <div class="text-group">
+            <h2>Hardware Projects + Thoughts</h2>
+            <p class="log-meta">Electrical Engineering • 2025-26</p>
+          </div>
         </div>
       </a>
 
-      <a href="logs/asml.html" class="persona-card">
+      <a href="logs/asml-semiconductor.html" class="persona-card" style="--i: 1;">
         <div class="card-content">
           <span class="log-number">LOG_02</span>
-          <h2>ASML & Semiconductor Research</h2>
-          <p class="log-meta">★ Computer Architecture ★ February 2026</p>
+          <div class="text-group">
+            <h2>ASML & Semiconductor Research</h2>
+            <p class="log-meta">Computer Architecture • Feb 2026</p>
+          </div>
         </div>
       </a>
 
-      <a href="logs/chat.html" class="persona-card">
+      <a href="logs/google-to-chat.html" class="persona-card" style="--i: 2;">
         <div class="card-content">
           <span class="log-number">LOG_01</span>
-          <h2>When & how did "Google it" become "Chat it"</h2>
-          <p class="log-meta">★ Yap ★  May 2026</p>
+          <div class="text-group">
+            <h2>When & how did "Google it" become "Chat it"</h2>
+            <p class="log-meta">Yap • May 2026</p>
+          </div>
         </div>
       </a>
 
@@ -63,5 +55,36 @@
     </footer>
   </div>
 
+  <script>
+    const cards = document.querySelectorAll('.persona-card');
+    let currentIndex = 0;
+
+    function updateSelection(index) {
+      cards.forEach(card => card.classList.remove('active'));
+      cards[index].classList.add('active');
+      cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      currentIndex = index;
+    }
+
+    // Keyboard Arrow Listeners
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        let next = currentIndex + 1;
+        if (next < cards.length) updateSelection(next);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        let prev = currentIndex - 1;
+        if (prev >= 0) updateSelection(prev);
+      } else if (e.key === 'Enter') {
+        cards[currentIndex].click();
+      }
+    });
+
+    // Mouse Hover Syncs with Active State
+    cards.forEach((card, index) => {
+      card.addEventListener('mouseenter', () => updateSelection(index));
+    });
+  </script>
 </body>
 </html>
