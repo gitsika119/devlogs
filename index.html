@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Technical devlogs by Gitika Saini.">
+  <meta name="description" content="Technical devlogs and engineering workshop notes by Gitika Saini.">
   <title>Gitika Saini | Devlogs</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,7 +18,7 @@
   <div class="menu-container">
     <main class="log-index">
       
-      <a href="logs/hardware-thoughts.html" class="persona-card" style="--i: 0;">
+      <a href="#" class="persona-card" style="--i: 0;" data-log-id="log_03">
         <div class="card-content">
           <span class="log-number">LOG_03</span>
           <div class="text-group">
@@ -28,7 +28,7 @@
         </div>
       </a>
 
-      <a href="logs/asml-semiconductor.html" class="persona-card" style="--i: 1;">
+      <a href="#" class="persona-card" style="--i: 1;" data-log-id="log_02">
         <div class="card-content">
           <span class="log-number">LOG_02</span>
           <div class="text-group">
@@ -38,7 +38,7 @@
         </div>
       </a>
 
-      <a href="logs/google-to-chat.html" class="persona-card" style="--i: 2;">
+      <a href="#" class="persona-card" style="--i: 2;" data-log-id="log_01">
         <div class="card-content">
           <span class="log-number">LOG_01</span>
           <div class="text-group">
@@ -55,9 +55,55 @@
     </footer>
   </div>
 
+  <div id="terminal-modal" class="terminal-overlay">
+    <div class="terminal-box">
+      <div class="terminal-header-bar">
+        <div class="terminal-dots">
+          <span class="dot close-dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="terminal-title">CONSOLE://SYSTEM_LOG/</div>
+      </div>
+      
+      <div class="terminal-body">
+        <div class="terminal-status-header">
+          <p class="terminal-alert">STATUS // ACTIVE_CONNECTION</p>
+          <p class="terminal-meta-line">REPOSITORY: DEVLOGS // UPDATED: MAY 2026</p>
+        </div>
+        
+        <h1 id="terminal-log-title">LOG_TITLE_PLACEHOLDER</h1>
+        <div id="terminal-log-content" class="terminal-text-content">
+          </div>
+        
+        <div class="terminal-footer-actions">
+          <button class="terminal-close-btn">&lt; BACK_TO_INDEX</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const cards = document.querySelectorAll('.persona-card');
+    const modal = document.getElementById('terminal-modal');
+    const terminalTitle = document.getElementById('terminal-log-title');
+    const terminalContent = document.getElementById('terminal-log-content');
+    const closeBtn = document.querySelector('.terminal-close-btn');
+    const closeDot = document.querySelector('.close-dot');
     let currentIndex = 0;
+
+    // Local Repository Write-up Storage (Pure contents only, no fluff elements)
+    const logDatabase = {
+      log_03: `
+        <p></p>
+      `,
+      log_02: `
+        <p></p>
+      `,
+      log_01: `
+        <p></p>
+      `
+    };
 
     function updateSelection(index) {
       cards.forEach(card => card.classList.remove('active'));
@@ -65,8 +111,38 @@
       currentIndex = index;
     }
 
-    // Keyboard Arrow Listeners (Desktop)
+    // Modal Active Injections
+    cards.forEach((card, index) => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault(); 
+        const logId = card.getAttribute('data-log-id');
+        const titleText = card.querySelector('h2').innerText;
+        
+        terminalTitle.innerText = `> ${titleText}`;
+        terminalContent.innerHTML = logDatabase[logId] || '<p>Error: Log content stream unreadable.</p>';
+        
+        modal.classList.add('open');
+      });
+    });
+
+    function closeTerminal() {
+      modal.classList.remove('open');
+    }
+
+    // Close Interaction Watchers
+    closeBtn.addEventListener('click', closeTerminal);
+    closeDot.addEventListener('click', closeTerminal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeTerminal();
+    });
+
+    // Keyboard Controller Engine
     window.addEventListener('keydown', (e) => {
+      if (modal.classList.contains('open')) {
+        if (e.key === 'Escape') closeTerminal();
+        return; 
+      }
+
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         let next = currentIndex + 1;
@@ -76,26 +152,24 @@
         let prev = currentIndex - 1;
         if (prev >= 0) updateSelection(prev);
       } else if (e.key === 'Enter') {
+        e.preventDefault();
         cards[currentIndex].click();
       }
     });
 
-    // Desktop Mouse Sync
+    // Device-Specific Initialization Layer
     if (window.innerWidth > 768) {
+      // Desktop Mouse Hover Mapping
       cards.forEach((card, index) => {
         card.addEventListener('mouseenter', () => updateSelection(index));
       });
-      // Initialize desktop with top selected
-      updateSelection(0);
-    }
-
-    // Mobile Scroll-Spy Engine (Auto-selects top element during scroll)
-    if (window.innerWidth <= 768) {
+      updateSelection(0); 
+    } else {
+      // Mobile Scroll-Spy Observer Implementation
       const observerOptions = {
         root: null,
-        // Targets elements crossing the upper-middle hot-zone of the mobile display
-        rootMargin: '-20% 0px -60% 0px',
-        threshold: 0.1
+        rootMargin: '-25% 0px -55% 0px', // Targets the upper-middle hot-zone of mobile viewports
+        threshold: 0.15
       };
 
       const observer = new IntersectionObserver((entries) => {

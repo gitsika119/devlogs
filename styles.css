@@ -1,4 +1,4 @@
-/* === Core Dynamic Reset === */
+/* === Core Dynamic Reset & Canvas === */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,7 +14,7 @@ body {
   flex-direction: row; 
   align-items: center;
   justify-content: flex-start;
-  padding: 40px 40px 40px 180px; /* Space for left vertical margin title */
+  padding: 40px 40px 40px 180px; 
   width: 100%;
   overflow-x: hidden;
 }
@@ -48,7 +48,7 @@ body {
   writing-mode: vertical-lr; 
   text-transform: uppercase;
   transform: rotate(180deg); 
-  color: #00f0ff; /* Unified solid premium color block */
+  color: #00f0ff; 
   filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.12));
   opacity: 0.85;
 }
@@ -63,7 +63,7 @@ body {
   flex-direction: column;
 }
 
-/* === DESKTOP RE-ACCELERATED CURVED CASCADE === */
+/* === DESKTOP KINETIC CURVED CASCADE === */
 .log-index {
   display: flex;
   flex-direction: column;
@@ -80,8 +80,9 @@ body {
   padding: 12px 16px;
   width: 100%;
   outline: none;
+  cursor: pointer;
   
-  /* Sweeps outward/downward by evaluating inward index offsets combined with positive angles */
+  /* Geometric arc mapping physics values */
   margin-left: calc(var(--i) * -35px + 80px); 
   transform: rotate(calc(var(--i) * 1.8deg)); 
   
@@ -137,31 +138,28 @@ body {
   transition: color 0.15s ease;
 }
 
-/* === ACTIVE TRANSITION DISPATCH CODES === */
-.persona-card:hover,
+/* === THE SINGLE ACTIVE STATE HOOK (NO NATIVE HOVER MODIFIERS) === */
 .persona-card.active {
-  margin-left: calc(var(--i) * -35px + 95px); /* Smooth layout drift step */
+  margin-left: calc(var(--i) * -35px + 95px); /* Only one shifts out at a time */
 }
 
-.persona-card:hover h2,
 .persona-card.active h2 {
   color: #00f0ff;
   font-style: italic;
-  transform: scale(1.02) skewX(-12deg); /* Dynamic menu vector skew */
+  transform: scale(1.02) skewX(-12deg); 
   text-shadow: 3px 3px 0px rgba(0, 240, 255, 0.15);
 }
 
-.persona-card:hover .log-number,
 .persona-card.active .log-number {
   color: #ffffff;
 }
 
-.persona-card:hover .log-meta,
 .persona-card.active .log-meta {
   color: #00f0ff;
   opacity: 0.8;
 }
 
+/* Index Footer Return Base Links */
 .index-footer {
   padding-left: 16px;
   margin-top: 25px;
@@ -180,16 +178,168 @@ body {
   color: #ffffff;
 }
 
-/* === UNIVERSAL HIGH-PERFORMANCE MOBILE COMPRESSION ENGINE === */
+/* === MODAL WINDOW WORKSPACE OVERLAYS === */
+.terminal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(3, 5, 8, 0.85); 
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none; 
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.terminal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.terminal-box {
+  background: #090d16;
+  border: 1px solid #1e293b;
+  border-top: 1px solid #334155;
+  width: 100%;
+  max-width: 720px;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 240, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.terminal-overlay.open .terminal-box {
+  transform: scale(1) translateY(0);
+}
+
+.terminal-header-bar {
+  background: #111622;
+  border-bottom: 1px solid #1e293b;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1e293b;
+}
+
+.dot.close-dot {
+  background: #ef4444; 
+  cursor: pointer;
+}
+
+.terminal-title {
+  font-family: SFMono-Regular, Consolas, monospace;
+  font-size: 0.75rem;
+  color: #475569;
+  letter-spacing: 1px;
+}
+
+.terminal-body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; 
+}
+
+.terminal-status-header {
+  margin-bottom: 24px;
+  background-color: rgba(0, 240, 255, 0.02);
+  border-left: 2px solid #00f0ff;
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+
+.terminal-status-header .terminal-alert {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #00f0ff;
+  letter-spacing: 1px;
+}
+
+.terminal-status-header .terminal-meta-line {
+  font-size: 0.7rem;
+  color: #475569;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
+#terminal-log-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+  border-bottom: 1px dashed #1e293b;
+  padding-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.terminal-text-content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.terminal-footer-actions {
+  margin-top: 35px;
+  border-top: 1px solid #1e293b;
+  padding-top: 20px;
+}
+
+.terminal-close-btn {
+  background: transparent;
+  border: 1px solid #1e293b;
+  color: #475569;
+  font-family: SFMono-Regular, monospace;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.terminal-close-btn:hover {
+  background: #ffffff;
+  color: #05070a;
+  border-color: #ffffff;
+}
+
+/* === UNIVERSAL SMARTPHONE RESPONSIVE ADAPTATIONS === */
 @media (max-width: 768px) {
   body {
     flex-direction: column; 
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 130px 16px 40px 16px; /* Shift canvas below the top title zone */
+    padding: 130px 16px 40px 16px; 
   }
 
-  /* Locks header horizontally at the absolute top of the phone screen */
   .vertical-header {
     position: absolute;
     top: 40px;
@@ -213,38 +363,30 @@ body {
   }
 
   .log-index {
-    gap: 24px; /* Open structural space to allow text lines to wrap cleanly */
+    gap: 24px; 
     width: 100%;
   }
 
-  /* Mobile Curves: Preserves geometry mapping but scales parameters down to safe screen limits */
   .persona-card {
-    margin-left: calc(var(--i) * -12px + 24px) !important; 
-    transform: rotate(calc(var(--i) * 1.2deg)) !important; 
-    padding: 12px 0;
-    width: calc(100% - 30px); /* Restrict width boundaries so no strings trail offscreen */
+    margin-left: calc(var(--i) * -18px + 36px) !important; 
+    transform: rotate(calc(var(--i) * 1.5deg)) !important; 
+    padding: 12px 10px;
+    width: calc(100% - 50px); 
+    box-sizing: border-box;
   }
 
-  /* Force vertical breakdown layout inside target cards */
-  .card-content {
+  .card-content, .text-group {
     flex-direction: column;
-    gap: 6px;
-    width: 100%;
-  }
-
-  .text-group {
-    flex-direction: column;
-    align-items: flex-start;
     gap: 6px;
     width: 100%;
   }
 
   .persona-card h2 {
     font-size: 1.2rem;
-    white-space: normal; /* Breaks strings into standard multi-line text blocks */
-    overflow-wrap: break-word; /* Prevents long tech vocab from stretching the screen */
+    white-space: normal; 
+    overflow-wrap: break-word; 
     word-break: normal;
-    color: #5c6f84; /* Elevated visibility for screen touch reading */
+    color: #5c6f84; 
   }
 
   .log-meta {
@@ -253,13 +395,11 @@ body {
     overflow-wrap: break-word;
   }
 
-  /* Active Scroll-Spy / Touch Hover state adjustments */
-  .persona-card:hover,
+  /* Sync active adjustments down on viewport constraints */
   .persona-card.active {
-    margin-left: calc(var(--i) * -12px + 30px) !important;
+    margin-left: calc(var(--i) * -18px + 42px) !important;
   }
 
-  .persona-card:hover h2,
   .persona-card.active h2 {
     color: #00f0ff;
     font-style: italic;
@@ -275,5 +415,27 @@ body {
     text-align: center;
     background-color: rgba(0, 240, 255, 0.02);
     color: #00f0ff;
+  }
+
+  .terminal-overlay {
+    padding: 12px; 
+  }
+
+  .terminal-box {
+    max-height: 90vh; 
+  }
+
+  .terminal-body {
+    padding: 20px; 
+  }
+
+  #terminal-log-title {
+    font-size: 1.3rem; 
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+
+  .terminal-text-content {
+    font-size: 0.88rem; 
   }
 }
