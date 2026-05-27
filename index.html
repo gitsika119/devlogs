@@ -85,97 +85,99 @@
   </div>
 
   <script>
-    const cards = document.querySelectorAll('.persona-card');
-    const modal = document.getElementById('terminal-modal');
-    const terminalTitle = document.getElementById('terminal-log-title');
-    const terminalContent = document.getElementById('terminal-log-content');
-    const closeBtn = document.querySelector('.terminal-close-btn');
-    const closeDot = document.querySelector('.close-dot');
-    let currentIndex = 0;
+  const cards = document.querySelectorAll('.persona-card');
+  const modal = document.getElementById('terminal-modal');
+  const terminalTitle = document.getElementById('terminal-log-title');
+  const terminalContent = document.getElementById('terminal-log-content');
+  const closeBtn = document.querySelector('.terminal-close-btn');
+  const closeDot = document.querySelector('.close-dot');
+  let currentIndex = 0;
 
-    // Local Repository Write-up Storage (Pure contents only, no fluff elements)
-    const logDatabase = {
-      log_03: `
-        <p></p>
-      `,
-      log_02: `
-        <p></p>
-      `,
-      log_01: `
-        <p></p>
-      `
-    };
+  // Local Repository Write-up Storage
+  const logDatabase = {
+    log_03: `<p></p>`,
+    log_02: `<p></p>`,
+    log_01: `<p></p>`
+  };
 
-    function updateSelection(index) {
-      cards.forEach(card => card.classList.remove('active'));
-      cards[index].classList.add('active');
-      currentIndex = index;
-    }
+  // Core Selection Engine
+  function updateSelection(index) {
+    if (index < 0 || index >= cards.length) return;
+    cards.forEach(card => card.classList.remove('active'));
+    cards[index].classList.add('active');
+    currentIndex = index;
+  }
 
-    // Modal Active Injections
-    cards.forEach((card, index) => {
-      card.addEventListener('click', (e) => {
-        e.preventDefault(); 
-        const logId = card.getAttribute('data-log-id');
-        const titleText = card.querySelector('h2').innerText;
-        
-        terminalTitle.innerText = `> ${titleText}`;
-        terminalContent.innerHTML = logDatabase[logId] || '<p>Error: Log content stream unreadable.</p>';
-        
-        modal.classList.add('open');
-      });
-    });
-
-    function closeTerminal() {
-      modal.classList.remove('open');
-    }
-
-    // Close Interaction Watchers
-    closeBtn.addEventListener('click', closeTerminal);
-    closeDot.addEventListener('click', closeTerminal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeTerminal();
-    });
-
-    // Keyboard Controller Engine
-    window.addEventListener('keydown', (e) => {
-      if (modal.classList.contains('open')) {
-        if (e.key === 'Escape') closeTerminal();
-        return; 
-      }
-
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        let next = currentIndex + 1;
-        if (next < cards.length) updateSelection(next);
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        let prev = currentIndex - 1;
-        if (prev >= 0) updateSelection(prev);
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        cards[currentIndex].click();
+  cards.forEach((card, index) => {
+    card.addEventListener('mouseenter', () => {
+      // 'pointer: fine' means the browser detects an actual mouse or trackpad!
+      // This runs perfectly even if your split-screen window is tiny.
+      const hasMouse = window.matchMedia('(pointer: fine)').matches;
+      
+      if (hasMouse && !modal.classList.contains('open')) {
+        updateSelection(index);
       }
     });
+  });
 
-    // Device-Specific Initialization Layer
-    if (window.innerWidth > 768) {
-      // Desktop Mouse Hover Mapping
-      cards.forEach((card, index) => {
-        card.addEventListener('mouseenter', () => updateSelection(index));
-      });
-      updateSelection(0); 
-    } else {
-      // Mobile Scroll-Spy Observer Implementation
+  // Modal Interactive Content Injections
+  cards.forEach((card, index) => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault(); 
+      const logId = card.getAttribute('data-log-id');
+      const titleText = card.querySelector('h2').innerText;
+      
+      terminalTitle.innerText = `> ${titleText}`;
+      terminalContent.innerHTML = logDatabase[logId] || '<p>Error: Log content stream unreadable.</p>';
+      
+      modal.classList.add('open');
+    });
+  });
+
+  function closeTerminal() {
+    modal.classList.remove('open');
+  }
+
+  closeBtn.addEventListener('click', closeTerminal);
+  closeDot.addEventListener('click', closeTerminal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeTerminal();
+  });
+
+  // Keyboard Navigation Engine
+  window.addEventListener('keydown', (e) => {
+    if (modal.classList.contains('open')) {
+      if (e.key === 'Escape') closeTerminal();
+      return; 
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      let next = currentIndex + 1;
+      if (next < cards.length) updateSelection(next);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      let prev = currentIndex - 1;
+      if (prev >= 0) updateSelection(prev);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      cards[currentIndex].click();
+    }
+  });
+
+  // Mobile Scroll-Spy Intersection Observer Setup
+  let observer;
+  function initMobileObserver() {
+    if (window.innerWidth <= 768) {
       const observerOptions = {
         root: null,
-        rootMargin: '-25% 0px -55% 0px', // Targets the upper-middle hot-zone of mobile viewports
+        rootMargin: '-25% 0px -55% 0px', 
         threshold: 0.15
       };
 
-      const observer = new IntersectionObserver((entries) => {
+      observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !modal.classList.contains('open')) {
             const index = Array.from(cards).indexOf(entry.target);
             updateSelection(index);
           }
@@ -183,7 +185,32 @@
       }, observerOptions);
 
       cards.forEach(card => observer.observe(card));
+    } else {
+      if (observer) {
+        observer.disconnect();
+      }
     }
-  </script>
+  }
+
+  // Initialize Layout on Page Boot
+  initMobileObserver();
+  updateSelection(0);
+
+  // Re-evaluate boundaries dynamically if layout changes size
+  window.addEventListener('resize', initMobileObserver);
+
+  // === UNIFIED BACK-BUTTON PAGE SHOW RESET ===
+  window.addEventListener("pageshow", () => {
+    // 1. Instantly strip performance-stuck transition states
+    const activeElements = document.querySelectorAll('.system-disintegrate, .activated-terminal');
+    activeElements.forEach(element => {
+      element.classList.remove('system-disintegrate', 'activated-terminal');
+    });
+
+    // 2. Clear terminal overlays and snap index safely back to LOG_03
+    modal.classList.remove('open');
+    updateSelection(0);
+  });
+</script>
 </body>
 </html>

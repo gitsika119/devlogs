@@ -71,21 +71,25 @@ body {
   margin-bottom: 30px;
   width: 100%;
   align-items: flex-start;
+  position: relative;
+  z-index: 50; 
 }
 
 .persona-card {
   text-decoration: none;
   display: block;
-  background: transparent;
+  background-color: rgba(255, 255, 255, 0.001) !important; 
+  pointer-events: auto !important; 
+  position: relative;
+  z-index: 60; 
   padding: 12px 16px;
   width: 100%;
   outline: none;
   cursor: pointer;
   
-  /* Geometric arc mapping physics values */
+  /* Geometric mapping framework */
   margin-left: calc(var(--i) * -35px + 80px); 
   transform: rotate(calc(var(--i) * 1.8deg)); 
-  
   transform-origin: left center;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               background-color 0.2s ease,
@@ -140,7 +144,7 @@ body {
 
 /* === THE SINGLE ACTIVE STATE HOOK (NO NATIVE HOVER MODIFIERS) === */
 .persona-card.active {
-  margin-left: calc(var(--i) * -35px + 95px); /* Only one shifts out at a time */
+  margin-left: calc(var(--i) * -35px + 95px); 
 }
 
 .persona-card.active h2 {
@@ -373,6 +377,9 @@ body {
     padding: 12px 10px;
     width: calc(100% - 50px); 
     box-sizing: border-box;
+    position: relative;
+    z-index: 60 !important;
+    pointer-events: auto !important;
   }
 
   .card-content, .text-group {
@@ -395,7 +402,6 @@ body {
     overflow-wrap: break-word;
   }
 
-  /* Sync active adjustments down on viewport constraints */
   .persona-card.active {
     margin-left: calc(var(--i) * -18px + 42px) !important;
   }
@@ -449,4 +455,74 @@ body {
   border: 1px solid #1e293b;
   margin: 16px 0;
   display: block;
+}
+
+/* === PERSONA WAVY RIPPLE INTERFACE === */
+#persona-ripple-shifter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ripple-ring {
+  position: absolute;
+  top: var(--click-y, 50%);
+  left: var(--click-x, 50%);
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
+  border-radius: 50%;
+  filter: url(#p5-paint-wobble);
+  transform: scale(0);
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ripple-cyan { background: #00f0ff; z-index: 10; }
+.ripple-black { background: #ffffff; z-index: 20; transition-delay: 0.08s; }
+.ripple-core { background: #05070a; z-index: 30; transition-delay: 0.16s; }
+
+.ripple-text-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  z-index: 40;
+  text-align: center;
+  font-family: 'Arial Black', -apple-system, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+  transition-delay: 0.4s;
+}
+
+.ripple-alert {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #00f0ff;
+  font-style: italic;
+  text-shadow: 4px 4px 0px #ffffff;
+  letter-spacing: -2px;
+}
+
+.ripple-meta {
+  font-family: SFMono-Regular, Consolas, monospace;
+  font-size: 0.8rem;
+  color: #ffffff;
+  letter-spacing: 4px;
+  margin-top: 6px;
+}
+
+#persona-ripple-shifter.active .ripple-ring {
+  transform: scale(450);
+}
+
+#persona-ripple-shifter.active .ripple-text-layer {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
