@@ -93,12 +93,18 @@
   const closeDot = document.querySelector('.close-dot');
   let currentIndex = 0;
 
-  // Local Repository Write-up Storage
-  const logDatabase = {
-    log_03: `<p></p>`,
-    log_02: `<p></p>`,
-    log_01: `<p></p>`
-  };
+    // Local Repository Write-up Storage (Pure contents only, no fluff elements)
+    const logDatabase = {
+      log_03: `
+        <p>//To-do</p>
+      `,
+      log_02: `
+        <p>//To-do</p>
+      `,
+      log_01: `
+        <p>//To-do</p>
+      `
+    };
 
   // Core Selection Engine
   function updateSelection(index) {
