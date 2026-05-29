@@ -146,7 +146,24 @@
       `,
         
       log_02: `
-        <p>//To-do</p>
+        <p>When you take introductory computer architecture classes, you're inevitably taught about the physical limitations of computing. Moore's Law states that the number of transistors on an integrated circuit doubles almost every two years with a minimal increase in cost. However, people say that this law hit a massive wall starting around 2010–2016, frequently highlighted by a five-year gap between Intel's 14nm and 10nm nodes.</p>
+        <p>As someone realizing that this law held true for almost three generations, it hits you that *someone* out there is still desperately trying to shrink and shove transistors onto silicon in an attempt to keep making computers faster and smaller.</p>
+        <p>That someone is Intel... well, Intel with a massive amount of help from ASML.</p>
+        <p>In a way, ASML seems to be in competition with no one, running a race to engineer the impossible completely alone (I lied, there's TSMC, Samsung, Intel, and tech giants like NVIDIA and AMD fighting for the output, but ASML builds the actual foundation). Their goal of chasing the impossible came through with their Extreme Ultraviolet (EUV) lithography machines, which are now paving the way to print features down to a mind-boggling 2nm scale.</p>
+        
+        <h3>EUV Lithography: Printing with Light</h3>
+        <p>The engineering behind these machines is honestly impossible. They use a high-power laser to blast a MICROSCOPIC, falling droplet of molten tin TWICE. The first blast flattens it out, and the second vaporizes it into a plasma that emits EUV light at a wavelength of exactly 13.5 nanometers.</p>
+        <p>They are quite literally printing circuits at a molecular scale using a wavelength of light so fragile that it gets absorbed by almost everything, INCLUDING AIR. Because of that, the entire process has to happen inside a ultra-high vacuum chamber.</p>
+
+        <p>As someone trying to figure out both cybersecurity and software engineering, looking down into this physical layer puts everything into perspective:</p>
+        <ul style="margin-bottom: 30px; padding-left: 20px;">
+          <li><strong>Hardware Security:</strong> When features on a chip are only a few nanometers wide, hardware-level vulnerabilities (like supply chain injections, hardware trojans, or physical side-channel attacks) become terrifying, near-invisible threats.</li>
+          <li><strong>The Physical Wall:</strong> We are physically running out of atoms. You can only shrink a silicon transistor so much before there's no space left.</li>
+          <li><strong>The Software Rescue:</strong> Because we can no longer rely on hardware naturally doubling in raw clock speed every two years, the burden shifts to us. Software optimization, hardware-software co-design, and assembly-level architecture tuning are no longer optional, they are the only way forward.</li>
+        </ul>
+
+        <p>It’s incredibly easy to get lost in high-level frameworks and treat a computer like a magical black box that just runs code. But peering down into the semiconductor research pipeline reminds you that every single line of software you write is just a set of instructions manipulating physical electrical charges on a sliver of silicon, printed by a multi-million dollar laser machine in the Netherlands.</p>
+        <p>Optimizing code feels much easier to do when you realize exactly how much money and physics went into making the transistor it's running on.</p>
       `,
       log_03: `
         <p>//To-do</p>
