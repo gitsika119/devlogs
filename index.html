@@ -207,7 +207,15 @@
       
       terminalTitle.innerText = `> ${titleText}`;
       terminalContent.innerHTML = logDatabase[logId] || '<p>Error: Log content stream unreadable.</p>';
+      modal.scrollTop = 0; 
       
+      const tBox = modal.querySelector('.terminal-box');
+      if (tBox) tBox.scrollTop = 0;
+      
+      const tBody = modal.querySelector('.terminal-body');
+      if (tBody) tBody.scrollTop = 0;
+      
+      terminalContent.scrollTop = 0;
       modal.classList.add('open');
     });
   });
