@@ -1,4 +1,3 @@
-/* === Core Dynamic Reset & Canvas === */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,31 +5,28 @@
 }
 
 body {
-  background-color: #05070a; 
+  background-color: #05070a;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #e2e8f0;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding: 40px 40px 40px 180px; 
+  padding: 40px 40px 40px 180px;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .diagonal-stripe {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(circle at 10% 30%, rgba(0, 240, 255, 0.03) 0%, rgba(0, 0, 0, 0) 60%);
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: radial-gradient(circle at 10% 30%, rgba(0, 240, 255, 0.03) 0%, transparent 60%);
   z-index: 1;
   pointer-events: none;
 }
 
-/* === Solid Left Sidebar Header === */
 .vertical-header {
   position: fixed;
   left: 45px;
@@ -45,113 +41,123 @@ body {
   font-weight: 900;
   font-size: 4.8rem;
   letter-spacing: -2px;
-  writing-mode: vertical-lr; 
+  writing-mode: vertical-lr;
   text-transform: uppercase;
-  transform: rotate(180deg); 
-  color: #00f0ff; 
+  transform: rotate(180deg);
+  color: #00f0ff;
   filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.12));
   opacity: 0.85;
 }
 
-/* Base Layout Wrapper */
 .menu-container {
   position: relative;
-  width: 100%;
-  max-width: 820px;
+  width: calc(100vw - 240px);
+  max-width: 860px;
+  height: 600px;
   z-index: 10;
   display: flex;
   flex-direction: column;
 }
 
-/* === DESKTOP KINETIC CURVED CASCADE === */
 .log-index {
   display: flex;
   flex-direction: column;
-  gap: 16px; 
-  margin-bottom: 30px;
+  gap: 4px;
   width: 100%;
+  height: 100%;
   align-items: flex-start;
   position: relative;
-  z-index: 50; 
+  z-index: 50;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  /* enough padding so first/last items can scroll to center */
+  padding-top: 40px;
+  padding-bottom: 300px;
 }
+
+.log-index::-webkit-scrollbar { display: none; }
 
 .persona-card {
   text-decoration: none;
   display: block;
-  background-color: rgba(255, 255, 255, 0.001) !important; 
-  pointer-events: auto !important; 
+  background-color: rgba(255,255,255,0.001) !important;
+  pointer-events: auto !important;
   position: relative;
-  z-index: 60; 
-  padding: 12px 16px;
-  width: 100%;
+  z-index: 60;
+  padding: 14px 16px;
+  /* 
+    Width is intentionally less than 100% so the card doesn't
+    stretch to the viewport edge — translateX won't clip content.
+  */
+  width: 75%;
   outline: none;
   cursor: pointer;
-  
-  /* Geometric mapping framework */
-  margin-left: calc(var(--i) * -35px + 80px); 
-  transform: rotate(calc(var(--i) * 1.8deg)); 
   transform-origin: left center;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.2s ease,
-              margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(var(--wave-x, 20px)) rotate(var(--wave-rot, 0deg));
+  opacity: var(--wave-opacity, 1);
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.15s ease;
 }
 
+.persona-card.active {
+  z-index: 70;
+  transform: translateX(calc(var(--wave-x, 20px) + 20px)) rotate(var(--wave-rot, 0deg)) scale(1.03) skewX(-8deg);
+  opacity: 1 !important;
+}
+
+/* Card content: log number + stacked text */
 .card-content {
   display: flex;
   flex-direction: row;
-  align-items: baseline;
-  gap: 24px;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
 }
 
 .log-number {
   font-family: SFMono-Regular, Consolas, monospace;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #334155;
   font-weight: bold;
   flex-shrink: 0;
+  min-width: 52px;
+  padding-top: 3px; /* align with first line of h2 */
   transition: color 0.15s ease;
 }
 
+/* text-group: title on top, meta below — no horizontal fighting */
 .text-group {
   display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
-  width: 100%;
-  gap: 30px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
 }
 
 .persona-card h2 {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   color: #475569;
   letter-spacing: -0.5px;
   text-transform: uppercase;
-  white-space: nowrap;
-  transform-origin: left center;
-  transition: color 0.15s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: normal;
+  line-height: 1.2;
+  transition: color 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .log-meta {
-  font-size: 0.85rem;
-  color: #1e293b;
+  font-size: 0.75rem;
+  color: #334155;
   font-family: SFMono-Regular, monospace;
   white-space: nowrap;
   transition: color 0.15s ease;
 }
 
-/* === THE SINGLE ACTIVE STATE HOOK (NO NATIVE HOVER MODIFIERS) === */
-.persona-card.active {
-  margin-left: calc(var(--i) * -35px + 95px); 
-}
-
 .persona-card.active h2 {
   color: #00f0ff;
   font-style: italic;
-  transform: scale(1.02) skewX(-12deg); 
-  text-shadow: 3px 3px 0px rgba(0, 240, 255, 0.15);
 }
 
 .persona-card.active .log-number {
@@ -160,13 +166,14 @@ body {
 
 .persona-card.active .log-meta {
   color: #00f0ff;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
-/* Index Footer Return Base Links */
 .index-footer {
   padding-left: 16px;
-  margin-top: 25px;
+  padding-top: 12px;
+  margin-top: 14px;
+  flex-shrink: 0;
 }
 
 .back-btn {
@@ -177,19 +184,14 @@ body {
   color: #334155;
   transition: color 0.2s ease;
 }
+.back-btn:hover { color: #ffffff; }
 
-.back-btn:hover {
-  color: #ffffff;
-}
-
-/* === MODAL WINDOW WORKSPACE OVERLAYS === */
+/* ── Terminal Modal ── */
 .terminal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(3, 5, 8, 0.85); 
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(3, 5, 8, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 1000;
@@ -198,14 +200,10 @@ body {
   align-items: center;
   padding: 30px;
   opacity: 0;
-  pointer-events: none; 
+  pointer-events: none;
   transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.terminal-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
+.terminal-overlay.open { opacity: 1; pointer-events: auto; }
 
 .terminal-box {
   background: #090d16;
@@ -215,17 +213,14 @@ body {
   max-width: 720px;
   max-height: 80vh;
   border-radius: 10px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 240, 255, 0.02);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 40px rgba(0,240,255,0.02);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   transform: scale(0.96) translateY(10px);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.terminal-overlay.open .terminal-box {
-  transform: scale(1) translateY(0);
-}
+.terminal-overlay.open .terminal-box { transform: scale(1) translateY(0); }
 
 .terminal-header-bar {
   background: #111622;
@@ -234,37 +229,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
 }
-
-.terminal-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #1e293b;
-}
-
-.dot.close-dot {
-  background: #ef4444; 
-  cursor: pointer;
-}
-
+.terminal-dots { display: flex; gap: 8px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; background: #1e293b; }
+.dot.close-dot { background: #ef4444; cursor: pointer; }
 .terminal-title {
   font-family: SFMono-Regular, Consolas, monospace;
-  font-size: 0.75rem;
-  color: #475569;
-  letter-spacing: 1px;
+  font-size: 0.75rem; color: #475569; letter-spacing: 1px;
 }
 
 .terminal-body {
   padding: 32px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; 
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .terminal-status-header {
@@ -273,83 +254,60 @@ body {
   border-left: 2px solid #00f0ff;
   padding: 12px 16px;
   border-radius: 4px;
+  flex-shrink: 0;
 }
-
 .terminal-status-header .terminal-alert {
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: #00f0ff;
-  letter-spacing: 1px;
+  font-size: 0.8rem; font-weight: bold; color: #00f0ff; letter-spacing: 1px;
 }
-
 .terminal-status-header .terminal-meta-line {
-  font-size: 0.7rem;
-  color: #475569;
-  margin-top: 4px;
-  letter-spacing: 0.5px;
+  font-size: 0.7rem; color: #475569; margin-top: 4px; letter-spacing: 0.5px;
 }
 
 #terminal-log-title {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-weight: 800;
-  font-size: 1.8rem;
-  color: #ffffff;
-  letter-spacing: -0.5px;
-  margin-bottom: 24px;
-  border-bottom: 1px dashed #1e293b;
-  padding-bottom: 16px;
-  text-transform: uppercase;
+  font-weight: 800; font-size: 1.8rem; color: #ffffff;
+  letter-spacing: -0.5px; margin-bottom: 24px;
+  border-bottom: 1px dashed #1e293b; padding-bottom: 16px;
+  text-transform: uppercase; flex-shrink: 0;
 }
 
 .terminal-text-content {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #94a3b8;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  font-size: 0.95rem; line-height: 1.6; color: #94a3b8;
+  display: flex; flex-direction: column; gap: 16px;
 }
 
 .terminal-footer-actions {
-  margin-top: 35px;
-  border-top: 1px solid #1e293b;
-  padding-top: 20px;
+  margin-top: 35px; border-top: 1px solid #1e293b;
+  padding-top: 20px; flex-shrink: 0;
 }
-
 .terminal-close-btn {
-  background: transparent;
-  border: 1px solid #1e293b;
-  color: #475569;
-  font-family: SFMono-Regular, monospace;
-  font-size: 0.8rem;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  background: transparent; border: 1px solid #1e293b;
+  color: #475569; font-family: SFMono-Regular, monospace;
+  font-size: 0.8rem; font-weight: bold;
+  padding: 10px 20px; border-radius: 6px;
+  cursor: pointer; transition: all 0.2s ease;
 }
+.terminal-close-btn:hover { background: #ffffff; color: #05070a; border-color: #ffffff; }
 
-.terminal-close-btn:hover {
-  background: #ffffff;
-  color: #05070a;
-  border-color: #ffffff;
-}
-
-/* === UNIVERSAL SMARTPHONE RESPONSIVE ADAPTATIONS === */
+/* ── Mobile ── */
 @media (max-width: 768px) {
   body {
-    flex-direction: column; 
+    flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 130px 16px 40px 16px; 
+    padding: 90px 0 60px 0;
+    height: auto;
+    overflow-y: auto;
   }
 
   .vertical-header {
-    position: absolute;
-    top: 40px;
-    left: 16px;
+    position: fixed;
+    top: 0; left: 0;
     transform: none;
-    width: calc(100% - 32px);
+    width: 100%;
+    background-color: #05070a;
+    padding: 20px 16px 12px 16px;
+    z-index: 200;
   }
 
   .vertical-header h1 {
@@ -364,165 +322,64 @@ body {
   .menu-container {
     max-width: 100%;
     width: 100%;
+    margin-top: 0;
+    height: auto;
   }
 
   .log-index {
-    gap: 24px; 
+    gap: 0;
     width: 100%;
+    height: auto;
+    overflow-y: visible;
+    padding-top: 8px;
+    padding-bottom: 40px;
   }
 
+  /* On mobile the card width can be wider since translateX is small */
   .persona-card {
-    margin-left: calc(var(--i) * -18px + 36px) !important; 
-    transform: rotate(calc(var(--i) * 1.5deg)) !important; 
-    padding: 12px 10px;
-    width: calc(100% - 50px); 
-    box-sizing: border-box;
-    position: relative;
-    z-index: 60 !important;
-    pointer-events: auto !important;
+    padding: 12px 16px;
+    width: 90%;
+    /* JS will set --wave-x to small safe values (0-15px) */
+    transform: translateX(var(--wave-x, 0px)) rotate(var(--wave-rot, 0deg));
+    opacity: var(--wave-opacity, 1) !important;
   }
 
-  .card-content, .text-group {
+  .persona-card.active {
+    transform: translateX(calc(var(--wave-x, 0px) + 12px)) rotate(var(--wave-rot, 0deg)) scale(1.02) skewX(-5deg) !important;
+    opacity: 1 !important;
+  }
+
+  /* Keep stacked layout on mobile too */
+  .card-content {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .text-group {
     flex-direction: column;
-    gap: 6px;
-    width: 100%;
+    gap: 3px;
   }
 
   .persona-card h2 {
-    font-size: 1.2rem;
-    white-space: normal; 
-    overflow-wrap: break-word; 
-    word-break: normal;
-    color: #5c6f84; 
-  }
-
-  .log-meta {
-    font-size: 0.75rem;
+    font-size: 1.05rem;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  .persona-card.active {
-    margin-left: calc(var(--i) * -18px + 42px) !important;
+  .log-meta {
+    font-size: 0.7rem;
+    white-space: normal;
   }
 
-  .persona-card.active h2 {
-    color: #00f0ff;
-    font-style: italic;
-    transform: scale(1.01) skewX(-10deg);
-  }
-
-  .back-btn {
-    display: block;
-    width: 100%;
-    border: 1px solid rgba(0, 240, 255, 0.15);
-    padding: 14px;
-    border-radius: 8px;
-    text-align: center;
-    background-color: rgba(0, 240, 255, 0.02);
-    color: #00f0ff;
-  }
-
-  .terminal-overlay {
-    padding: 12px; 
-  }
-
-  .terminal-box {
-    max-height: 90vh; 
-  }
-
-  .terminal-body {
-    padding: 20px; 
-  }
-
-  #terminal-log-title {
-    font-size: 1.3rem; 
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-  }
-
-  .terminal-text-content {
-    font-size: 0.88rem; 
+  .log-number {
+    font-size: 0.7rem;
+    min-width: 44px;
   }
 }
 
-/* Responsive Terminal Images */
-.terminal-text-content img.terminal-img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  border: 1px solid #1e293b;
-  margin: 16px 0;
-  display: block;
-}
-
-/* === PERSONA WAVY RIPPLE INTERFACE === */
-#persona-ripple-shifter {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 99999;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.ripple-ring {
-  position: absolute;
-  top: var(--click-y, 50%);
-  left: var(--click-x, 50%);
-  width: 10px;
-  height: 10px;
-  margin-top: -5px;
-  margin-left: -5px;
-  border-radius: 50%;
-  filter: url(#p5-paint-wobble);
-  transform: scale(0);
-  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.ripple-cyan { background: #00f0ff; z-index: 10; }
-.ripple-black { background: #ffffff; z-index: 20; transition-delay: 0.08s; }
-.ripple-core { background: #05070a; z-index: 30; transition-delay: 0.16s; }
-
-.ripple-text-layer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  z-index: 40;
-  text-align: center;
-  font-family: 'Arial Black', -apple-system, sans-serif;
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
-  transition-delay: 0.4s;
-}
-
-.ripple-alert {
-  font-size: 4rem;
-  font-weight: 900;
-  color: #00f0ff;
-  font-style: italic;
-  text-shadow: 4px 4px 0px #ffffff;
-  letter-spacing: -2px;
-}
-
-.ripple-meta {
-  font-family: SFMono-Regular, Consolas, monospace;
-  font-size: 0.8rem;
-  color: #ffffff;
-  letter-spacing: 4px;
-  margin-top: 6px;
-}
-
-#persona-ripple-shifter.active .ripple-ring {
-  transform: scale(450);
-}
-
-#persona-ripple-shifter.active .ripple-text-layer {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+.terminal-text-content img {
+  width: 100%; max-width: 100%; height: auto;
+  border-radius: 6px; border: 1px solid #1e293b;
+  margin: 8px 0; display: block;
 }
