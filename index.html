@@ -69,8 +69,28 @@
         <div class="card-content">
           <span class="log-number">LOG_04</span>
           <div class="text-group">
-            <h2>Hardware Trojans and are they even relevant now?"</h2>
+            <h2>Hardware Trojans and are they even relevant now?</h2>
             <p class="log-meta">Computer Engineering • Cyber Security • June 2026</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="persona-card" data-log-id="log_05">
+        <div class="card-content">
+          <span class="log-number">LOG_05</span>
+          <div class="text-group">
+            <h2>How my portfolio came to be</h2>
+            <p class="log-meta">Project • June 2026</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="persona-card" data-log-id="log_06">
+        <div class="card-content">
+          <span class="log-number">LOG_06</span>
+          <div class="text-group">
+            <h2>The attempted Persona 3 ui approach to this site</h2>
+            <p class="log-meta">Project • June 2026</p>
           </div>
         </div>
       </a>
@@ -257,6 +277,12 @@
     <p>But here is the punchline for the rest of us: unless you are running a military-grade aerospace defense lab, you can't do anything about it. Your phone, your laptop, your smart fridge, nobody is shaving those down with ion beams to look for an extra 50 gates hidden among 50 billion. We just live with the statistical probability that the global supply chain was honest enough this morning.</p>
     <p>It forces you, a software user/operator/creator, into a completely dismal direction: <i>How do I write code that survives on a system I don't trust?</i></p>
     <p>Spoiler alert: you don't. If the hardware is rigged, it's already over. Just hit compile and don't think too hard about it. :D </p>
+    `,
+    log_05:`
+    //WIP
+    `,
+    log_06:`
+    //To-do
     `
   };
 
@@ -322,23 +348,29 @@
     }
   });
 
-  // Mobile: highlight card when it scrolls into the center zone
   let mobileObserver;
   function initMobileObserver() {
-    if (window.innerWidth <= 768) {
-      if (mobileObserver) mobileObserver.disconnect();
-      mobileObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !modal.classList.contains('open')) {
-            updateSelection(Array.from(cards).indexOf(entry.target));
-          }
-        });
-      }, { rootMargin: '-30% 0px -50% 0px', threshold: 0.1 });
-      cards.forEach(card => mobileObserver.observe(card));
-    } else {
-      if (mobileObserver) mobileObserver.disconnect();
-    }
-  }
+  if (mobileObserver) mobileObserver.disconnect();
+
+  const isMobile = window.innerWidth <= 768;
+  let ready = false;
+  setTimeout(() => { ready = true; }, 300);
+
+  mobileObserver = new IntersectionObserver((entries) => {
+    if (!ready) return;
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !modal.classList.contains('open')) {
+        updateSelection(Array.from(cards).indexOf(entry.target));
+      }
+    });
+  }, {
+    root: isMobile ? null : logIndex,
+    rootMargin: isMobile ? '-30% 0px -50% 0px' : '-15% 0px -75% 0px',
+    threshold: 0.1
+  });
+
+  cards.forEach(card => mobileObserver.observe(card));
+}
 
   initMobileObserver();
   updateSelection(0);
@@ -346,11 +378,19 @@
     calculateRadialCurve();
     initMobileObserver();
   });
-
+  logIndex.addEventListener('scroll', () => {
+    if (logIndex.scrollTop < 5) updateSelection(0);
+  });
   window.addEventListener('pageshow', () => {
     modal.classList.remove('open');
     updateSelection(0);
   });
+  document.addEventListener('wheel', (e) => {
+  if (window.innerWidth > 768 && !modal.classList.contains('open')) {
+    e.preventDefault();
+    logIndex.scrollBy({ top: e.deltaY, behavior: 'auto' });
+  }
+}, { passive: false });
   </script>
 </body>
 </html>
