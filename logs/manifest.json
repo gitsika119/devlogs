@@ -1,0 +1,44 @@
+[
+  {
+    "id": "log00",
+    "number": "LOG_00",
+    "title": "Hey guys welcome back to my YouTube channel (intro)",
+    "meta": "Yap • May 2026"
+  },
+  {
+    "id": "log01",
+    "number": "LOG_01",
+    "title": "Hardware Projects + Thoughts",
+    "meta": "Electrical Engineering • 2025-26"
+  },
+  {
+    "id": "log02",
+    "number": "LOG_02",
+    "title": "ASML & Semiconductor Research",
+    "meta": "Computer Architecture • Feb 2026"
+  },
+  {
+    "id": "log03",
+    "number": "LOG_03",
+    "title": "When & how did \"Google it\" become \"Chat it\"",
+    "meta": "Yap • May 2026"
+  },
+  {
+    "id": "log04",
+    "number": "LOG_04",
+    "title": "Hardware Trojans and are they even relevant now?",
+    "meta": "Computer Engineering • Cyber Security • June 2026"
+  },
+  {
+    "id": "log05",
+    "number": "LOG_05",
+    "title": "How my portfolio came to be",
+    "meta": "Project • June 2026 (WIP)"
+  },
+  {
+    "id": "log06",
+    "number": "LOG_06",
+    "title": "The attempted Persona 3 ui approach to this site",
+    "meta": "Project • June 2026 (WIP)"
+  }
+]
