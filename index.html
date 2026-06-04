@@ -35,7 +35,7 @@
         </div>
       </a>
 
-      <a href="#" class="persona-card" data-log-id="log_01">
+      <a href="#" class="persona-card" data-log-id="log01">
         <div class="card-content">
           <span class="log-number">LOG_01</span>
           <div class="text-group">
@@ -45,7 +45,7 @@
         </div>
       </a>
 
-      <a href="#" class="persona-card" data-log-id="log_02">
+      <a href="#" class="persona-card" data-log-id="log02">
         <div class="card-content">
           <span class="log-number">LOG_02</span>
           <div class="text-group">
@@ -55,7 +55,7 @@
         </div>
       </a>
 
-      <a href="#" class="persona-card" data-log-id="log_03">
+      <a href="#" class="persona-card" data-log-id="log03">
         <div class="card-content">
           <span class="log-number">LOG_03</span>
           <div class="text-group">
@@ -65,7 +65,7 @@
         </div>
       </a>
 
-      <a href="#" class="persona-card" data-log-id="log_04">
+      <a href="#" class="persona-card" data-log-id="log04">
         <div class="card-content">
           <span class="log-number">LOG_04</span>
           <div class="text-group">
@@ -75,7 +75,7 @@
         </div>
       </a>
 
-      <a href="#" class="persona-card" data-log-id="log_05">
+      <a href="#" class="persona-card" data-log-id="log05">
         <div class="card-content">
           <span class="log-number">LOG_05</span>
           <div class="text-group">
@@ -85,7 +85,7 @@
         </div>
       </a>
 
-      <a href="#" class="persona-card" data-log-id="log_06">
+      <a href="#" class="persona-card" data-log-id="log06">
         <div class="card-content">
           <span class="log-number">LOG_06</span>
           <div class="text-group">
@@ -181,110 +181,6 @@
   window.addEventListener('scroll', calculateRadialCurve);
   window.addEventListener('resize', calculateRadialCurve);
 
-  const logDatabase = {
-    log_00: `
-      <p>Hi, I just wanted an online commonplace notebook of sorts and a Devlog felt like a perfect idea, it's good for the resume, I get to write about anything I want to, and people can read if they're invested enough. </p>
-      <p>So yes, this site is essentially a dumping ground of coffee fueled realisations that I wanted to document. I don't have a theme in mind but expect musing on software, hardware, my experiences with tech, my experiences in general and an occasional art break.</p>
-      <p>Currently:</p>
-      <ul>
-        <li>Rising Senior at Penn State studying Computer Engineering</li>
-        <li>SDE Intern at Bayer</li>
-        <li>Working on... something</li>
-      </ul>
-      <p>Previously (2010?):</p>
-      <img src="images/puter.webp" alt="because I Like to work on the computer" />
-    `,
-    log_01: `
-    <div style="display: block; width: 100%; margin-bottom: 30px;">
-      <img src="images/fail.webp" alt="Failed Image" style="float: left; width: 35%; height: auto; margin-right: 30px; margin-bottom: 10px;">
-      <p style="margin-top: 0;">I'm pursuing Computer Engineering with my eyes on software and cybersecurity roles. Which begs the question: why not just take Computer Science? Why go through the nightmare of soldering and crashing out over physical components?</p>
-      <p>Because it's fun T-T</p>
-      <p>As nerdy as it may sound, my few hands-on projects have been a really (if not the most) enjoyable part of my degree, and while I don't see myself building and soldering full-time (I don't have the hand eye coordination to do that 9-5), I do enjoy it on the occasions I do it. </p>
-      <p>Like all engineers, I started small:</p>
-      <ul style="margin-bottom: 20px; padding-left: 20px;">
-        <li>Lighting a bulb on a breadboard</li>
-        <li>Building with logic gates and resistors</li>
-        <li>Adding capacitors</li>
-        <li>...and BOOM trying to solder everything together on a PCB while my TA watches, deeply concerned about the safety of the components. (Not my finger, which accidentally touched the soldering gun tip. "Rite of passage," apparently.)</li>
-      </ul>
-    </div>
-    <div style="clear: both;"></div>
-    <h3>EE 210: The Archaic Music Player</h3>
-    <div style="display: block; width: 100%; margin-bottom: 30px;">
-      <img src="images/locomotion.webp" alt="A massive circuits breadboard packed precariously inside a school backpack" style="float: right; width: 35%; height: auto; margin-left: 20px; margin-bottom: 10px;">
-      <p style="margin-top: 0;">For my EE 210 final project, I built a "music player."</p>
-      <p>It was completely archaic. Nobody would use it to actually listen to music today, but seeing how everyday devices start out as a sprawling mess on a bench is incredible. It's a snapshot of the foundational layers before everything gets shrunk down.</p>
-      <p>Trying to transport a fully wired analog prototype is an engineering challenge in itself. One loose jumper wire inside a backpack and the entire circuit is dead on arrival at the lab bench.</p>
-    </div>
-    <div style="clear: both;"></div>
-    <div style="display: block; width: 100%; margin-bottom: 30px;">
-      <img src="images/210.webp" alt="Close-up macro shot of a green PCB board" style="float: left; width: 35%; height: auto; margin-right: 20px; margin-bottom: 10px;">
-      <p style="margin-top: 0;">Moving from that fragile mess of wires to a permanent printed circuit board changes everything. There is a steep learning curve to getting clean solder joints and making sure your ICs are seated correctly, but the structural reliability is unmatched.</p>
-    </div>
-    <div style="clear: both;"></div>
-    <h3>STM32: Brick Breaker</h3>
-    <div style="display: block; width: 100%; margin-bottom: 30px;">
-      <img src="images/game.webp" alt="STM32 brick breaker game" style="float: right; width: 38%; height: auto; margin-left: 20px; margin-bottom: 10px;">
-      <p style="margin-top: 0;">My second hardware project shifted away from discrete analog chaos toward integrated embedded systems. The IEEE chapter at Penn State hosted a workshop series on the STM32 microcontroller, concluding with building a functional game of Brick Breaker.</p>
-      <p>Soldering the components together, flashing the code, and watching it come to life puts the scale of the field into perspective. You look at this custom PCB plugged into a laptop playing a retro game, and then you realize this exact same STM32 chip powers hoverboards.</p>
-      <p>Knowing how much there is left to learn, and seeing how fast this technology has progressed just makes me happy to say that I'll be an engineer in the future.</p>
-    </div>
-    <div style="clear: both;"></div>
-    <h3>Final Thoughts</h3>
-    <p>Software gets a lot of credit for abstraction, but there is a distinct satisfaction in abstracting away a mess of wires into a single pocket-sized gizmo.</p>
-    <p>That line was HARDDDD(ware). I'll leave it at that, thanks for reading if you did and scrolling if you didn't :)) </p>
-    `,
-    log_02: `
-      <p>When you take introductory computer architecture classes, you're inevitably taught about the physical limitations of computing. Moore's Law states that the number of transistors on an integrated circuit doubles almost every two years with a minimal increase in cost. However, people say that this law hit a massive wall starting around 2010–2016, frequently highlighted by a five-year gap between Intel's 14nm and 10nm nodes.</p>
-      <p>As someone realizing that this law held true for almost three generations, it hits you that <em>someone</em> out there is still desperately trying to shrink and shove transistors onto silicon in an attempt to keep making computers faster and smaller.</p>
-      <p>That someone is Intel... well, Intel with a massive amount of help from ASML.</p>
-      <p>In a way, ASML seems to be in competition with no one, running a race to engineer the impossible completely alone (I lied, there's TSMC, Samsung, Intel, and tech giants like NVIDIA and AMD fighting for the output, but ASML builds the actual foundation). Their goal of chasing the impossible came through with their Extreme Ultraviolet (EUV) lithography machines, which are now paving the way to print features down to a mind-boggling 2nm scale.</p>
-      <h3>EUV Lithography: Printing with Light</h3>
-      <p>The engineering behind these machines is honestly impossible. They use a high-power laser to blast a MICROSCOPIC, falling droplet of molten tin TWICE. The first blast flattens it out, and the second vaporizes it into a plasma that emits EUV light at a wavelength of exactly 13.5 nanometers.</p>
-      <p>They are quite literally printing circuits at a molecular scale using a wavelength of light so fragile that it gets absorbed by almost everything, INCLUDING AIR. Because of that, the entire process has to happen inside a ultra-high vacuum chamber.</p>
-      <p>As someone trying to figure out both cybersecurity and software engineering, looking down into this physical layer puts everything into perspective:</p>
-      <ul style="margin-bottom: 30px; padding-left: 20px;">
-        <li><strong>Hardware Security:</strong> When features on a chip are only a few nanometers wide, hardware-level vulnerabilities (like supply chain injections, hardware trojans, or physical side-channel attacks) become terrifying, near-invisible threats.</li>
-        <li><strong>The Physical Wall:</strong> We are physically running out of atoms. You can only shrink a silicon transistor so much before there's no space left.</li>
-        <li><strong>The Software Rescue:</strong> Because we can no longer rely on hardware naturally doubling in clock speed every two years, the burden shifts to us. Software optimization, hardware-software co-design, and assembly-level architecture tuning are no longer optional, they are the only way forward.</li>
-      </ul>
-      <p>It's incredibly easy to get lost in high-level frameworks and treat a computer like a magical black box that just runs code. But looking down into the semiconductor research pipeline reminds you that every single line of software you write is just a set of instructions manipulating physical electrical charges on a sliver of silicon, printed by a multi-million dollar laser machine in the Netherlands.</p>
-      <p>Optimizing code feels much easier to do when you realize exactly how much money and physics went into making the transistor it's running on.</p>
-    `,
-    log_03: `
-      <p>I'm 21, it's 2026, and for as long as I can remember, "Google it," "search it up," or "my dad told me" had been the default answers to "I don't know." You searched it up, skipped the ads, and went straight to the first Reddit result that came up.</p>
-      <p>But over the last four years, that "Google it" silently became "Chat it", and EVERYONE realizes it.</p>
-      <p>This is just my take on the topic. I'm not an etymology expert, a psychologist, or a subject matter expert on anything. I'm just someone who likes to yap and muse and dilly-dally and frolic and... you get the gist of it.</p>
-      <h3>The Path of Least Resistance</h3>
-      <p>I feel like it's just a convenience thing. Like water, people naturally take the path of least resistance, and if something is annoying, people will (consciously or unconsciously) avoid it. Think about scrolling past the AI-generated summary on a search page just to find a Reddit thread matching your particular issue, when the summary already very likely gathered its information from that exact same thread.</p>
-      <p>Why go through the friction of hunting through links when the tool just gives it to you straight?</p>
-      <h3>The Erosion of the Bedrock</h3>
-      <p>But just like water erodes and weathers the bedrock while flowing, there's a catch. I feel like people are creating enough AI slop out there now for AI to start feeding on its own slop, causing it to hallucinate. Which is hilarious, but also a reality check. It makes you realize that digging a bit deeper just to manually confirm Chat's answers might actually be a sound idea.</p>
-      <p>My final thoughts on this? I don't know, actually. I'm human too, and like most of us, that path of least resistance is quite appealing. We are going to keep chatting it, we just have to make sure we don't forget how to verify it.</p>
-    `,
-    log_04: `
-    <p>As someone who started off as a CS major, I had a very software-centered view of CyberSec. I forgot that 'cyber' includes not only the software and networks related to the computer, but the computer itself. The hardware.</p>
-    <p>Starting with a line I wrote in log 02: "When features on a chip are only a few nanometers wide, hardware-level vulnerabilities (like supply chain injections, hardware trojans, or physical side-channel attacks) become terrifying, near-invisible threats."</p>
-    <p>Now, you'd think that the chips being tiny was a pro; who'll go and make the effort to tamper with something so complicated? Something that requires a multi-million dollar machine to build must definitely need the same resources to tamper with, right?</p>
-    <p>Wrong.</p>
-    <p>Most companies, as we saw previously, don't build chips themselves; the actual physical fabrication is outsourced. This means that the long, convoluted supply chain of the chip manufacturing process is a massive vulnerability. Just ONE subtle alteration to the digital layout mask (photomask) before printing can create a hardware trojan that compromises the security of the entire chip. The cost to the attacker is essentially zero—they are just riding on the multi-billion dollar infrastructure you paid for.</p>
-    <p>This is especially concerning for government and military applications, where a single compromised batch of chips could lead to... well, problems. And the worst part? These trojans can be designed to stay dormant until a specific trigger wakes them up, making them nearly impossible to detect through standard post-fabrication testing.</p>
-    <p>The existential dread of hardware security is that because the backdoor is baked directly into the logic gates, your software layer is entirely blind to it. Your kernel patches, anti-virus sweeps, and secure boot profiles are completely useless if the silicon beneath them is lying to them.</p>
-    <p>It’s a unique kind of cooked. You can’t push an update to physically un-modify a cluster of microscopic transistors inside a sealed package. Once it’s printed, it’s permanent.</p>
-    <h3>Don't Worry, Someone is Stressing (So We Don't Have To)</h3>
-    <p>To be fair, it's not a complete free-for-all. There are rooms full of incredibly stressed engineers and defense labs trying their absolute best to stop this. They run massive mathematical proofs before fabrication, pay absurd premiums for top-secret domestic foundries, and literally destroy random sample chips from batches by slicing them open with electron microscopes just to check the gate alignments pixel-by-pixel against the original blueprints.</p>
-    <p>People are trying. Very hard.</p>
-    <p>But here is the punchline for the rest of us: unless you are running a military-grade aerospace defense lab, you can't do anything about it. Your phone, your laptop, your smart fridge, nobody is shaving those down with ion beams to look for an extra 50 gates hidden among 50 billion. We just live with the statistical probability that the global supply chain was honest enough this morning.</p>
-    <p>It forces you, a software user/operator/creator, into a completely dismal direction: <i>How do I write code that survives on a system I don't trust?</i></p>
-    <p>Spoiler alert: you don't. If the hardware is rigged, it's already over. Just hit compile and don't think too hard about it. :D </p>
-    `,
-    log_05:`
-    //WIP
-    `,
-    log_06:`
-    //To-do
-    `
-  };
 
   function updateSelection(index) {
     if (index < 0 || index >= cards.length) return;
@@ -302,24 +198,48 @@
     });
   });
 
-  cards.forEach((card) => {
-    card.addEventListener('click', (e) => {
-      e.preventDefault();
-      const logId = card.getAttribute('data-log-id');
-      const titleText = card.querySelector('h2').innerText;
+  const logCache = {};
 
-      terminalTitle.innerText = `> ${titleText}`;
-      terminalContent.innerHTML = logDatabase[logId] || '<p>Error: Log content stream unreadable.</p>';
+async function preloadLogs() {
+  for (const card of cards) {
+    const id = card.getAttribute('data-log-id');
+    fetch(`logs/${id}.html`)
+      .then(r => r.text())
+      .then(html => { logCache[id] = html; })
+      .catch(() => {});
+  }
+}
+preloadLogs();
 
-      modal.classList.add('open');
+cards.forEach((card) => {
+  card.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const logId     = card.getAttribute('data-log-id');
+    const titleText = card.querySelector('h2').innerText;
 
-      requestAnimationFrame(() => {
-        modal.scrollTop = 0;
-        const tBody = modal.querySelector('.terminal-body');
-        if (tBody) tBody.scrollTop = 0;
-      });
+    terminalTitle.innerText = `> ${titleText}`;
+    modal.classList.add('open');
+
+    if (logCache[logId]) {
+      terminalContent.innerHTML = logCache[logId];
+    } else {
+      terminalContent.innerHTML = '<p style="color:#475569;font-family:monospace;font-size:0.8rem">// LOADING...</p>';
+      try {
+        const res  = await fetch(`logs/${logId}.html`);
+        const html = await res.text();
+        logCache[logId] = html;
+        terminalContent.innerHTML = html;
+      } catch {
+        terminalContent.innerHTML = '<p>Error: Log content stream unreadable.</p>';
+      }
+    }
+
+    requestAnimationFrame(() => {
+      const tBody = modal.querySelector('.terminal-body');
+      if (tBody) tBody.scrollTop = 0;
     });
   });
+});
 
   function closeTerminal() {
     modal.classList.remove('open');
