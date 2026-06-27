@@ -1,1 +1,24 @@
-<p>//To-Do</p>
+<p>This one is about this site, specifically the UI, why it looks the way it does, and how an RPG ended up influencing my personal blog.</p>
+<h3>The Sketch</h3>
+<div style="display: block; width: 100%; margin-bottom: 30px;">
+  <img src="../images/devlog.webp" alt="Original wireframe sketch in bullet journal" style="float: right; width: 40%; height: auto; margin-left: 20px; margin-bottom: 10px;">
+  <p style="margin-top: 0;">It started in my bullet journal. Goals: replace the VSCO button, add a blog/notes section. The "wireframe" was three boxes and some arrows. A simple, Home → Notes page (click to go) → Flip page and open notes.</p>
+  <p>Very architectural. Very serious. Very much not what this ended up being.</p>
+</div>
+<div style="clear: both;"></div>
+
+<h3>The Persona 3 Thing</h3>
+<div style="display: block; width: 100%; margin-bottom: 30px;">
+  <img src="../images/persona.webp" alt="Persona 3 menu UI" style="float: left; width: 40%; height: auto; margin-right: 20px; margin-bottom: 10px;">
+  <p style="margin-top: 0;">Persona 3 has one of the most distinctive UIs in gaming (high contrast, bold typography, aggressive angles, everything skewed and italic and urgent). The menu system in particular: a vertical list of options that curves toward the center of the screen, each entry lit up as you scroll past it.</p>
+  <p>I wanted that. Not a clone, just the feeling of it. Something that felt like a game menu rather than a blog index.</p>
+</div>
+<div style="clear: both;"></div>
+<h3>The Wave Curve</h3>
+<p>The card list you scrolled through to get here has a radial curve shoved into it, cards near the center of the screen arc outward, cards at the edges fade back. It's calculated in JS on every scroll event, mapping each card's distance from the viewport center to a translateX and rotation value.</p>
+<p>Getting it to feel right on both desktop and mobile took an embarrassing number of iterations. Desktop uses an inner scroll container so the curve math has a fixed reference point. Mobile scrolls the whole page, so the reference has to be the viewport itself. Two completely different scroll contexts, the same function.</p>
+
+<h3>The Terminal Modal</h3>
+<p>The log entries open in a terminal-style modal, dark background, monospace header, status bar, red close dot. It's meant to feel like you're reading a log file, which is either very cool or very cringe depending on who you ask.</p>
+<p>Each log is its own HTML file in a logs/ folder, fetched on click and cached so repeat opens are instant. The preload runs in the background on page load, so by the time you click anything it's probably already there.</p>
+<p>If you made it this far into the log, hi. Thanks for reading or scrolling :P.</p>
